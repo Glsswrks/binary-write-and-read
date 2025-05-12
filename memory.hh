@@ -32,7 +32,7 @@ namespace utility
 				m_blc = nullptr;
 			} m_bytes = 0x0, m_mempos = 0;
 		}
-		explicit binary_reader(const uintmax_t size) {
+		explicit binary_reader(uint8_t* blc, const uintmax_t size) {
 			if (size <= 0 || size >= UINT64_MAX || size >= available_memory())
 				throw std::exception("invalid bytes to allocate");
 			else {
@@ -40,7 +40,7 @@ namespace utility
 				if (not m_blc)
 					throw std::exception("not enough memory to allocate");
 				// just buy more ram at this point lmao ><
-				std::memset(m_blc, 0x0, size);
+				std::memcpy(m_blc, blc, size);
 				m_bytes = size, m_mempos = 0;
 			}
 		}
